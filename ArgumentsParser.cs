@@ -83,7 +83,8 @@ namespace ImgResize
          * Print the usage help for the application, and then exit with a code 0 (which does not have
          * a specific meaning..)
          * */
-        public static void printUsageHelp() { 
+        public static void printUsageHelp() {
+            log4net.LogManager.GetLogger("main").Debug("Called with incorrect parameters, showing usage help");
             Console.Out.WriteLine("Oops.. It seems some commandline parameter is missing or is not parsable." + 
                                   "Here is the correct syntax for supplying commandline parameters:\n" +
                                   "-resizePercentage=[percentage of change]\n" +

@@ -93,7 +93,10 @@ namespace ImgResize
             if (System.IO.File.Exists(fullToolPath))
                 return fullToolPath;
             else
-                throw new System.IO.FileNotFoundException();
+            {
+                log4net.LogManager.GetLogger("main").Fatal("Could not find resource: " + fullToolPath);
+                throw new System.IO.FileNotFoundException("Could not find the neccessary resource: " + fullToolPath);
+            }
         }
 
         /*
@@ -113,11 +116,15 @@ namespace ImgResize
             return runCommand(tool, commandArguments);
         }
 
+        /*
+         * Run a command in a hidden terminal. This is used to run the imagemagick tools
+         */
         private static bool runCommand(string command, string args) {
-            var x = (command + " " + args);
-            var p = Process.Start(command, args);
+            ProcessStartInfo info = new ProcessStartInfo(command, args);
+            info.CreateNoWindow = true;
+            info.UseShellExecute = false;
+            Process processChild = Process.Start(info); 
             return true;
-        
         }
 
     }
